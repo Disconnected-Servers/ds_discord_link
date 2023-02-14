@@ -1,4 +1,4 @@
-hook.Add("Initialize", "DS_Discord", function()
+hook.Add("InitPostEntity", "DS_Discord", function()
     Discord.send({
         ["username"] = Discord.name,
         ["avatar_url"] = Discord.avatar,
@@ -8,6 +8,4 @@ hook.Add("Initialize", "DS_Discord", function()
             ["color"] = Discord.color
         }}
     })
-
-    hook.Remove("Initialize", "DS_Discord")
 end)

@@ -18,15 +18,15 @@ end
 
 local function heartbeat()
     socket:write([[
-    {
+      {
         "op": 1,
-        "d": null
-    }
+        "d": 251
+      }      
     ]])
 end
 
 local function createHeartbeat()
-    timer.Create('DS_Discord', 10, 0, function()
+    timer.Create('DS_Discord', 30, 0, function()
         heartbeat()
     end)
 end
@@ -48,10 +48,11 @@ function socket:onMessage(txt)
             if string.sub(resp.d.content, 0, 1) == Discord.botPrefix then
               command = string.sub(resp.d.content, 2)
 
-              if Discord.commands[command] then Discord.commands[command]() end
+              if Discord.commands[command] then Discord.commands[command](resp.d) end
 
               return
             end
+
             broadcastMsg({
                 ['author'] = resp.d.author.username,
                 ['content'] = resp.d.content
@@ -66,7 +67,7 @@ end
 
 function socket:onConnected()
 	print("[Discord] connected to Discord server")
-    local req = [[
+  local req = [[
     {
       "op": 2,
       "d": {
@@ -77,7 +78,7 @@ function socket:onConnected()
           "os": "linux",
           "browser": "gmod",
           "device": "pc"
-        },
+        }
       }
     }
     ]]

@@ -13,9 +13,11 @@ function Discord.send(form)
 
 	local json = util_TableToJSON(form)
 
+	print(json)
+
 	CHTTP({
 		["failed"] = function(msg)
-			print("[Discord] "..msg)
+			print("[Discord] " .. msg)
 		end,
 		["method"] = "POST",
 		["url"] = Discord.webhook,
@@ -46,7 +48,7 @@ function createAvatar(sid, co)
 
 	http_Fetch("https://steamcommunity.com/profiles/"..id.."?xml=1", function(body)
 		local _, _, url = string.find(body, '<avatarFull>.*.(https://.*)]].*\n.*<vac')
-		tmpAvatars[id] = url
+		Avatars[id] = url
 
 		coroutine_resume(co)
 	end, function (msg)
@@ -57,13 +59,13 @@ end
 function getAvatar(id)
 	local id, id32 = steamid(id)
 
-	return tmpAvatars[id]
+	return Avatars[id]
 end
 
 function removeAvatar(id)
 	local id, id32 = steamid(id)
 
-	tmpAvatars[id] = nil
+	Avatars[id] = nil
 end
 
 function ColorToDecimal(color)

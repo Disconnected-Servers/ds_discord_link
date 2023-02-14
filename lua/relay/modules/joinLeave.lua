@@ -26,10 +26,10 @@ end)
 hook.Add("PlayerInitialSpawn", "DS_Discord", function(ply)
     local co = coroutine_create(function() 
         Discord.send({
-            ["username"] = ply.name,
+            ["username"] = ply:Nick(),
             ["avatar_url"] = getAvatar(ply:SteamID()),
             ["embeds"] = {{
-                ["url"] = "https://steamid.io/lookup/" .. util.SteamIDTo64(ply.networkid),
+                ["url"] = "https://steamid.io/lookup/" .. ply:SteamID64(),
                 ["title"] = "Spawned in the server " .. #players .. "/" .. game.MaxPlayers(),
                 ["color"] = Discord.color,
             }}
@@ -49,10 +49,11 @@ hook.Add("player_disconnect", "DS_Discord", function(ply)
 
         Discord.send({
             ["username"] = ply.name,
-            ["avatar_url"] = GetPfp(util.SteamIDTo64(ply.networkid)),
+            ["avatar_url"] = avatar,
             ["embeds"] = {{
                 ["url"] = "https://steamid.io/lookup/" .. util.SteamIDTo64(ply.networkid),
-                ["title"] = "Disconnected from the server " .. #players .. "/" .. game.MaxPlayers() .. "```" .. ply.reason .. "```",
+                ["title"] = "Disconnected from the server " .. #players .. "/" .. game.MaxPlayers(),
+                ["description"] = "```" .. ply.reason .. "```",
                 ["color"] = Discord.color,
             }}
         })

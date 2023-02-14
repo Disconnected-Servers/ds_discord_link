@@ -1,9 +1,20 @@
-Discord.commands['status'] = function()
+Discord.commands['status'] = function(data)
+    local staffOnline = 0
+
+    for _, ply in ipairs(player.GetAll()) do
+        if not ply:IsAdmin() and not Discord.staffRanks[ply:GetUserGroup()] then continue end
+
+        staffOnline = staffOnline + 1
+    end
+
+    local hostname = string.Replace(GetHostName(), "🌌", "")
+
     Discord.send({
         ["username"] = Discord.name,
         ["avatar_url"] = Discord.avatar,
         ["embeds"] = {{
-            ["title"] = GetHostName(),
+            ["title"] = hostname,
+            ["url"] = "steam://connect/" .. game.GetIPAddress(),
             ["fields"] = {
                 {
                     ["name"] = "IP Adress",
@@ -27,26 +38,19 @@ Discord.commands['status'] = function()
                 },
                 {
                     ["name"] = "Staff Online",
-                    ["value"] = (function()
-                        local a = 0
-
-                        for _, ply in ipairs(player.GetAll()) do
-                            if not ply:IsAdmin() and not staffRank[ply:GetUserGroup()] then continue end
-
-                            a = a + 1
-                        end
-
-                        return a
-                    end)(),
-                    ["inline"] = true,
-                },
-                {
-                    ["name"] = "** **",
-                    ["value"] = "** **",
+                    ["value"] = tostring(staffOnline),
                     ["inline"] = true,
                 }
             },
-            ["color"] = Discord.color
+            ["color"] = Discord.color,
+            ["footer"] = {
+                ["text"] = Discord.name,
+                ["icon_url"] = Discord.avatar,
+            }
         }}
     }) 
+
+    Discord.send({
+        ["content"] = "test",
+    })
 end

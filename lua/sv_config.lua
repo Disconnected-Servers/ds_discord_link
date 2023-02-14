@@ -5,7 +5,7 @@ Discord = {
 
 	['avatar'] = "https://dservers.xyz/img/ds-milky-way.png",
 
-	['color'] = RgbToHex(color_dblue),
+	['color'] = 28415,
 
 	['readChannelID'] = "1053811631248920646",
 
@@ -13,8 +13,14 @@ Discord = {
 
 	["botPrefix"] = "!",
 
+	["staffRanks"] = {"superadmin", "administrator"},
+
+	["SuperAdminRole"] = "681911907686678552",
+
+	["AdminRole"] = "846811405403684885",
+
 	-- For developers (logs)
-	['debug'] = true,
+	['debug'] = false,
 
 	-- Don't touch!
 	['commands'] = {}

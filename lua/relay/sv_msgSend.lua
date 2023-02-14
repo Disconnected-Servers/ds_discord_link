@@ -14,7 +14,7 @@ function Discord.send(form)
 
 	local json = util_TableToJSON(form)
 
-	print(json)
+	--print(json)
 
 	/*
 	CHTTP({
@@ -41,9 +41,11 @@ function Discord.send(form)
 		},
 	
 		success = function(status, body, headers)
-			print("HTTP " .. status)
-			--PrintTable(headers)
-			print(body)
+			if status ~= 204 then
+				print("HTTP " .. status)
+				--PrintTable(headers)
+				print(body)
+			end
 		end,
 	
 		failed = function(err, errExt)

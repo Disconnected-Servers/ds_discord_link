@@ -45,8 +45,9 @@ function socket:onMessage(txt)
     if resp.d then
         if resp.t == "MESSAGE_CREATE" && resp.d.channel_id == Discord.readChannelID && resp.d.content != '' then
             if resp.d.author.bot == true then return end
-            if string.sub(resp.d.content, 0, 1) == Discord.botPrefix then
-              command = string.sub(resp.d.content, 2)
+            local args = string.Explode(" ", resp.d.content)
+            if string.sub(args[1], 0, 1) == Discord.botPrefix then
+              command = string.sub(args[1], 2)
 
               if Discord.commands[command] then Discord.commands[command](resp.d) end
 

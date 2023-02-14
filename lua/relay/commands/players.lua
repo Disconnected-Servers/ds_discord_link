@@ -54,6 +54,10 @@ Discord.commands['players'] = function(data)
             ["url"] = "steam://connect/" .. game.GetIPAddress(),
             ["description"] = "```md\n".. text .."```",
             ["color"] = Discord.color,
+            ["footer"] = {
+                ["text"] = data.author.username,
+                ["icon_url"] = "https://cdn.discordapp.com/avatars/" .. data.author.id .. "/" .. data.author.avatar .. ".webp",
+            }
         }},
     })
 end

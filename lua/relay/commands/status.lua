@@ -7,14 +7,11 @@ Discord.commands['status'] = function(data)
         staffOnline = staffOnline + 1
     end
 
-    local hostname = string.Replace(GetHostName(), "🌌", "")
-
     Discord.send({
         ["username"] = Discord.name,
         ["avatar_url"] = Discord.avatar,
         ["embeds"] = {{
-            ["title"] = hostname,
-            ["url"] = "steam://connect/" .. game.GetIPAddress(),
+            ["title"] = GetHostName(),
             ["fields"] = {
                 {
                     ["name"] = "IP Adress",
@@ -44,13 +41,9 @@ Discord.commands['status'] = function(data)
             },
             ["color"] = Discord.color,
             ["footer"] = {
-                ["text"] = Discord.name,
-                ["icon_url"] = Discord.avatar,
+                ["text"] = data.author.username,
+                ["icon_url"] = "https://cdn.discordapp.com/avatars/" .. data.author.id .. "/" .. data.author.avatar .. ".webp",
             }
         }}
-    }) 
-
-    Discord.send({
-        ["content"] = "test",
     })
 end

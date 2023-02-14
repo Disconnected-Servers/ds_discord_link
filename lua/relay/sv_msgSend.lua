@@ -1,4 +1,5 @@
-require("chttp")
+--require("chttp")
+require("reqwest")
 
 Avatars = {}
 
@@ -15,6 +16,7 @@ function Discord.send(form)
 
 	print(json)
 
+	/*
 	CHTTP({
 		["failed"] = function(msg)
 			print("[Discord] " .. msg)
@@ -23,6 +25,30 @@ function Discord.send(form)
 		["url"] = Discord.webhook,
 		["body"] = json,
 		["type"] = "application/json"
+	})
+	*/
+
+	reqwest({
+		method = "POST",
+		url = Discord.webhook,
+		timeout = 30,
+		
+		body = json, -- https://discord.com/developers/docs/resources/webhook#execute-webhook
+		type = "application/json",
+	
+		headers = {
+			["User-Agent"] = "My User Agent", -- This is REQUIRED to dispatch a Discord webhook
+		},
+	
+		success = function(status, body, headers)
+			print("HTTP " .. status)
+			--PrintTable(headers)
+			print(body)
+		end,
+	
+		failed = function(err, errExt)
+			print("Error: " .. err .. " (" .. errExt .. ")")
+		end
 	})
 end
 

@@ -31,3 +31,5 @@ Discord.commands['restart'] = function(data)
         RunConsoleCommand("_restart")
     end
 end
+
+Discord.help['restart'] = "Restarts the server."

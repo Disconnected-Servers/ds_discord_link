@@ -37,6 +37,11 @@ Discord.commands['status'] = function(data)
                     ["name"] = "Staff Online",
                     ["value"] = tostring(staffOnline),
                     ["inline"] = true,
+                },
+                {
+                    ["name"] = "** **",
+                    ["value"] = "** **",
+                    ["inline"] = true,
                 }
             },
             ["color"] = Discord.color,
@@ -47,3 +52,5 @@ Discord.commands['status'] = function(data)
         }}
     })
 end
+
+Discord.help['status'] = "Shows the server status."

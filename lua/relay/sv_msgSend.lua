@@ -95,8 +95,3 @@ function removeAvatar(id)
 
 	Avatars[id] = nil
 end
-
-function ColorToDecimal(color)
-    local rgb = (color.r * 0x10000) + (color.g * 0x100) + color.b
-    return string.format("%x", rgb)
-end

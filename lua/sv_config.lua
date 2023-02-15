@@ -23,5 +23,6 @@ Discord = {
 	['debug'] = false,
 
 	-- Don't touch!
-	['commands'] = {}
+	['commands'] = {},
+	['help'] = {}
 }

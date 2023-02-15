@@ -1,4 +1,4 @@
-Discord.commands['rcon'] = function(data)
+Discord.commands['lua'] = function(data)
     if table.KeyFromValue(data.member.roles, Discord.SuperAdminRole) == nil then return end
 
     local args = string.Explode(' ', data.content)
@@ -11,7 +11,7 @@ Discord.commands['rcon'] = function(data)
             ["avatar_url"] = Discord.avatar,
             ["embeds"] = {{
                 ["title"] = ":x: Error",
-                ["description"] = "You need to specify a command to run.",
+                ["description"] = "You need to specify code to run.",
                 ["color"] = Discord.color,
                 ["footer"] = {
                     ["text"] = data.author.username,
@@ -23,14 +23,21 @@ Discord.commands['rcon'] = function(data)
         return
     end
 
-    game.ConsoleCommand(command)
+    local func = CompileString(command, 'DiscordLuaRun', false)
+    local result = ":white_check_mark: Script Executed!"
+
+    if type(func) == 'function' then
+        func()
+    else
+        result = ":x: Error Compiling Script!"
+    end
 
     Discord.send({
         ["username"] = Discord.name,
         ["avatar_url"] = Discord.avatar,
         ["embeds"] = {{
-            ["title"] = ":white_check_mark: RCON Command Executed",
-            ["description"] = "```" .. command .. "```",
+            ["title"] = result,
+            ["description"] = "```lua\n" .. command .. "```",
             ["color"] = Discord.color,
             ["footer"] = {
                 ["text"] = data.author.username,
@@ -40,4 +47,4 @@ Discord.commands['rcon'] = function(data)
     })
 end
 
-Discord.help['rcon'] = "Run a command on the server."
+Discord.help['lua'] = "Run Lua code on the server."

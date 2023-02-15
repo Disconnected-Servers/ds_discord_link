@@ -2,6 +2,7 @@ if SERVER then
 	include("sv_config.lua")
 	include("relay/sv_msgSend.lua")
 	include("relay/sv_msgGet.lua")
+	include("relay/sv_utils.lua")
 
 	-- commands
 	local files, _ = file.Find( 'relay/commands/' .. "*", "LUA" )

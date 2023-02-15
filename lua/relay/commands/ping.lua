@@ -12,3 +12,5 @@ Discord.commands['ping'] = function(data)
         }}
     })
 end
+
+Discord.help['ping'] = "Pong!"

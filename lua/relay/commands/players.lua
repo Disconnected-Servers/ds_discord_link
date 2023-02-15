@@ -61,3 +61,5 @@ Discord.commands['players'] = function(data)
         }},
     })
 end
+
+Discord.help['players'] = "Get A List Of Players Connected To The Server."

@@ -1,9 +1,10 @@
 require("gwsockets")
 util.AddNetworkString("DS_Discord")
 
+
 Discord.isSocketReloaded = false
 
-if Discord.socket != nil then Discord.isSocketReloaded = true; Discord.socket:closeNow(); end
+if Discord.socket ~= nil then Discord.isSocketReloaded = true; Discord.socket:closeNow(); end
 
 Discord.socket = Discord.socket or GWSockets.createWebSocket("wss://gateway.discord.gg/?encoding=json", false)
 local socket = Discord.socket
@@ -43,7 +44,7 @@ function socket:onMessage(txt)
     if resp.op == 10 and resp.t == nil then createHeartbeat() end
     if resp.op == 1 then heartbeat() end
     if resp.d then
-        if resp.t == "MESSAGE_CREATE" && resp.d.channel_id == Discord.readChannelID && resp.d.content != '' then
+        if resp.t == "MESSAGE_CREATE" and resp.d.channel_id == Discord.readChannelID and resp.d.content ~= '' then
             if resp.d.author.bot == true then return end
             local args = string.Explode(" ", resp.d.content)
             if string.sub(args[1], 0, 1) == Discord.botPrefix then
@@ -116,7 +117,7 @@ function socket:onDisconnected()
     print("[Discord] WebSocket disconnected")
     timer.Remove('DS_Discord')
 
-    if Discord.isSocketReloaded != true then
+    if Discord.isSocketReloaded ~= true then
         print('[Discord] WebSocket reload in 5 sec...')
         timer.Simple(5, function() socket:open() end)
     end

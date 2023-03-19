@@ -1,11 +1,15 @@
 local coroutine_resume = coroutine.resume
 local coroutine_create = coroutine.create
-local joiningplayers = {}
+local players = {}
 
 --player connected
 gameevent.Listen( "player_connect" )
 hook.Add("player_connect", "DS_Discord", function(data)
-    joiningplayers[#joiningplayers + 1] = {data.networkid, data.name}
+    if data.bot ~= 1 then
+        players[data.networkid] = data.name
+    else
+        players[data.name] = data.name
+    end
 
     local co = coroutine_create(function() 
         Discord.send({
@@ -13,7 +17,7 @@ hook.Add("player_connect", "DS_Discord", function(data)
             ["avatar_url"] = getAvatar(data.networkid),
             ["embeds"] = {{
                 ["url"] = "https://steamid.io/lookup/" .. util.SteamIDTo64(data.networkid),
-                ["title"] = "Has Connected To The Server " .. #joiningplayers .. "/" .. game.MaxPlayers(),
+                ["title"] = "Has Connected To The Server " .. table.Count(players) .. "/" .. game.MaxPlayers(),
                 ["color"] = Discord.color,
             }}
         })
@@ -24,13 +28,19 @@ end)
 
 --player spawned
 hook.Add("PlayerInitialSpawn", "DS_Discord", function(ply)
+    if not ply:IsBot() then
+        players[ply:SteamID()] = ply:Nick()
+    else
+        players[ply:Nick()] = ply:Nick()
+    end
+
     local co = coroutine_create(function() 
         Discord.send({
             ["username"] = ply:Nick(),
             ["avatar_url"] = getAvatar(ply:SteamID()),
             ["embeds"] = {{
                 ["url"] = "https://steamid.io/lookup/" .. ply:SteamID64(),
-                ["title"] = "Spawned in the server " .. #joiningplayers .. "/" .. game.MaxPlayers(),
+                ["title"] = "Spawned in the server " .. table.Count(players) .. "/" .. game.MaxPlayers(),
                 ["color"] = Discord.color,
             }}
         })
@@ -46,10 +56,10 @@ hook.Add("player_disconnect", "DS_Discord", function(data)
         local avatar = getAvatar(data.networkid)
         removeAvatar(data.networkid)
 
-        for position, tableData in pairs(joiningplayers) do
-            if tableData == {data.networkid, data.name} then
-                joiningplayers[position] = nil
-            end
+        if data.bot ~= 1 then
+            players[data.networkid] = nil
+        else
+            players[data.name] = nil
         end
 
         Discord.send({
@@ -57,7 +67,7 @@ hook.Add("player_disconnect", "DS_Discord", function(data)
             ["avatar_url"] = avatar,
             ["embeds"] = {{
                 ["url"] = "https://steamid.io/lookup/" .. util.SteamIDTo64(data.networkid),
-                ["title"] = "Disconnected from the server " .. #joiningplayers .. "/" .. game.MaxPlayers(),
+                ["title"] = "Disconnected from the server " .. table.Count(players) .. "/" .. game.MaxPlayers(),
                 ["description"] = "```" .. data.reason .. "```",
                 ["color"] = Discord.color,
             }}
@@ -65,4 +75,14 @@ hook.Add("player_disconnect", "DS_Discord", function(data)
     end)
 
     createAvatar(data.networkid, co)
+end)
+
+concommand.Add("discord_link_players", function(ply)
+    if IsValid(ply) then
+        if not ply:IsSuperAdmin() then
+            return
+        end
+    end
+
+    PrintTable(players)
 end)

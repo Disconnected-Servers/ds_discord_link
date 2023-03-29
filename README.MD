@@ -1,8 +1,8 @@
 # Discord Relay for Garry's Mod
 
 ## Installation:
-1. Install [GWSocket](https://github.com/FredyH/GWSockets/releases/) module
-2. Install [CHTTP](https://github.com/timschumi/gmod-chttp/releases) module
+1. Install [GWSockets](https://github.com/FredyH/GWSockets/releases/) module
+2. Install [gmsv_reqwest](https://github.com/timschumi/WilliamVenner/gmsv_reqwest) module
 3. Install this addon
 4. Configurate discord-realy/lua/sv_config.lua
 5. Done! Restart server

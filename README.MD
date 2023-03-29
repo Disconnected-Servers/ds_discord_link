@@ -2,9 +2,9 @@
 
 ## Installation:
 1. Install [GWSockets](https://github.com/FredyH/GWSockets/releases/) module
-2. Install [gmsv_reqwest](https://github.com/timschumi/WilliamVenner/gmsv_reqwest) module
+2. Install [gmsv_reqwest](https://github.com/WilliamVenner/gmsv_reqwest) module
 3. Install this addon
-4. Configurate discord-realy/lua/sv_config.lua
+4. Configurate discord-relay/lua/sv_config.lua
 5. Done! Restart server
 
 ## Default Prefix:

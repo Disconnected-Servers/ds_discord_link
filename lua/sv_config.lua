@@ -1,5 +1,5 @@
 Discord = {
-	['webhook'] = "https://discord.com/api/webhooks/1077664131894743143/wrnyHca7EoUXlPyjsiuZYc_LkI054MemSgC0fY-ZC7t9qjYfAuIrRjQFfkZfbgP6_k4S",
+	['webhook'] = "https://discord.com/api/webhooks/",
 	
 	['name'] = "VEGA",
 

@@ -9,7 +9,7 @@ Discord = {
 
 	['readChannelID'] = "1053811631248920646",
 
-	['botToken'] = 'NzEzMDQ0ODk3OTg4NDc2OTY5.XsaYzw.4A7UEXVHO2UF_cLWfiZzHyunDIc',
+	['botToken'] = '',
 
 	["botPrefix"] = "!",
 

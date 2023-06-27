@@ -3,7 +3,7 @@ local title = string.find( initalip, "0.0.0.0" ) and "The server has started or 
 
 local function sendWebhook()
     if string.find( game.GetIPAddress(), "0.0.0.0" ) then
-        timer.Simple( 0.1, function()
+        return timer.Simple( 0.1, function()
             return sendWebhook()
         end )
     end

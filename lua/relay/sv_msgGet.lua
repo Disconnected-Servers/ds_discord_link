@@ -56,7 +56,7 @@ function socket:onMessage(txt)
             end
 
             broadcastMsg({
-                ['author'] = resp.d.author.username,
+                ['author'] = resp.d.author.global_name .. " (" .. resp.d.author.username .. ")",
                 ['content'] = resp.d.content
             })
         end
